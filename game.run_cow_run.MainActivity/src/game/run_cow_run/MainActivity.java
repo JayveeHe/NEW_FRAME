@@ -4,6 +4,7 @@ import jayvee.cow.CowData;
 import jayvee.cow.CowLogic;
 import jayvee.cow.CowView;
 import jayvee.drawbox.Drawing_Data;
+import jayvee.drawbox.Drawing_Logic;
 import jayvee.drawbox.Drawing_Queue;
 import android.os.Bundle;
 import android.os.Message;
@@ -41,15 +42,18 @@ public class MainActivity extends YGameActivity {
         YGameView gameView = (YGameView) findViewById(R.id.GameView);
         YAGameLogic gameLogic = gameView.getGameLogic();
         gameLogic.setUpdatePeriod(49);
+        Drawing_Data dd = new Drawing_Data(444);
+        Drawing_Logic dl = new Drawing_Logic(dd);
+        Drawing_Queue dq = new Drawing_Queue(dd);
         CowData cd = new CowData(222);
-        final CowLogic cl = new CowLogic( cd , mapLogic);
+        final CowLogic cl = new CowLogic( cd , mapLogic, dl.dq);
         CowView cv = new CowView(cd);
         new YDomainBroadcast(cd,cl,cv);
-        Drawing_Data dd = new Drawing_Data(444);
-        Drawing_Queue dq = new Drawing_Queue(dd);
         
-        gameLogic.addDomainLogic(mapLogic,cl);
-        gameView.addDomainView(mapView,cv);
+       
+        
+        gameLogic.addDomainLogic(mapLogic,cl,dl);
+        gameView.addDomainView(mapView,cv,dq);
         
         //°´¼üµÄÉèÖÃ///
         Button btn_test =(Button) findViewById(R.id.btn_test);

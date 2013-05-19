@@ -17,15 +17,11 @@ import fyy.ygame_frame.util.YImageUtil;
 import game.run_cow_run.R;
 
 public class CowView extends YABaseDomainView<CowData> {
-	Queue<Boxs> dq = new LinkedList<Boxs>();
 
 	public CowView(CowData domainData) {
 		super(domainData);
 		// TODO Auto-generated constructor stub
-		for (int queue_count = 0; queue_count < 2; queue_count++) {
-			Boxs b = new Boxs();
-			dq.add(b);
-		}
+
 
 	}
 
@@ -49,7 +45,6 @@ public class CowView extends YABaseDomainView<CowData> {
 	private Bitmap[] btmpRun;
 	private Bitmap[] btmpJump;
 
-	private int xoffset = 5;
 
 	private int[] btmpBoxIds = new int[] { R.drawable.box_1, R.drawable.box_2,
 			R.drawable.box_3, R.drawable.box_4, };
@@ -78,7 +73,7 @@ public class CowView extends YABaseDomainView<CowData> {
 		// TODO Auto-generated method stub
 		int iSideLength;
 		// iSideLength = 3 * iTileSideLength;
-		iSideLength = 3 * 30;
+		iSideLength = 5 * 30;
 		// iSideLength = 100;
 		iPerLength = iSideLength;
 		btmpRun = YImageUtil.getBitmapArray(resources, iRunImgIds);
@@ -114,25 +109,7 @@ public class CowView extends YABaseDomainView<CowData> {
 		canvas.drawText("判断原点", logicX, logicY, paint);
 
 		// broadcastDomain.send(CowView.iMSG_Trans_Canvas, canvas, this);
-		Boxs tempbox = dq.peek();
-		for (int i = 0; i < dq.size(); i++) {
-			tempbox = dq.peek();
-
-			dq.peek().addX(xoffset);// 增加偏移
-			if (dq.peek().isCreated != 0) {
-				canvas.drawBitmap(btmpBoxs[dq.peek().iKind], dq.peek().iX,
-						dq.peek().iY, null);
-			}
-			tempbox = dq.poll();
-			dq.add(tempbox);// 将队尾元素取出并重新塞入队头；
-		}
-		if (tempbox.iX > 600)// 超出了屏幕，此处600须修改（适配后）
-		{
-			dq.poll();
-			dq.add(new Boxs());
-		} else if (tempbox.iX == 100) {
-			dq.add(new Boxs());
-		}
+		
 
 	}
 

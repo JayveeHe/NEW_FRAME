@@ -2,6 +2,9 @@ package jayvee.cow;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Queue;
+
+import jayvee.drawbox.Boxs;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -38,6 +41,9 @@ public class CowLogic extends YABaseDomainLogic<CowData> {
 	private int xoffset = 0;
 	private int yoffset = 0;
 	private int is_being_hurt = 0;
+	
+	private Queue<Boxs> dq;
+	
 
 	// 逻辑判断值——切记一定要有完整的true/false互相转换的条件！！！
 	private boolean isSprite_Left_Direction = false;// 人物是否朝向左，初始值为右
@@ -57,10 +63,11 @@ public class CowLogic extends YABaseDomainLogic<CowData> {
 	private int xV = 0;
 	public int iState;
 
-	public CowLogic(CowData domainData, YMapLogic mapLogic) {
+	public CowLogic(CowData domainData, YMapLogic mapLogic, Queue<Boxs> dq) {
 		super(domainData);
 		// TODO Auto-generated constructor stub
 		this.mapLogic = mapLogic;
+		this.dq = dq;
 	}
 
 	public void onReceiveBroadcastMsg(int iMsgKey, Object objectDetailMsg) {
